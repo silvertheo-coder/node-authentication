@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -10,7 +11,7 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // database connection
-const dbURI = '';
+const dbURI = 'mongodb+srv://silvertheo:121292@cluster0.xxiai.mongodb.net/node-authentication?retryWrites=true&w=majority';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
@@ -18,3 +19,5 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 // routes
 app.get('/', (req, res) => res.render('home'));
 app.get('/smoothies', (req, res) => res.render('smoothies'));
+
+app.use(authRoutes)
